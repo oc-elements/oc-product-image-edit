@@ -13,8 +13,28 @@ Element to display product image editing controls on the Ordercloud platform
       :host {
         display: block;
       }
+
+      .default-icon {
+        color: gold;
+      }
+
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+
+    <section class="product-image-gallery">
+      <template is="dom-repeat" items="[[images]]">
+        <div class="single-image">
+          <img src="[[item.thumbnail]]" alt="">
+          <div class="image-actions" data-item$="[[item]]">
+            <paper-icon-button id="delete" icon="delete" title="Delete Image"  on-tap="_actionHandler"></paper-icon-button>
+            <paper-icon-button id="default" class="default-icon" icon="[[_isDefault(item.default)]]" title="Set as Default"  on-tap="_actionHandler"></paper-icon-button>
+          </div>
+        </div>
+      </template>
+    </section>
+
+
+
   </template>
 
   <script>
@@ -23,10 +43,17 @@ Element to display product image editing controls on the Ordercloud platform
       is: 'oc-product-image-edit',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'oc-product-image-edit',
-        },
+        images : Array,
+      },
+
+      _isDefault : function(isDefault) {
+        return (isDefault) ? "star" : "star-border";
+      },
+
+      _actionHandler: function(e) {
+        var extraObj = JSON.parse(Polymer.dom(event).localTarget.parentElement.getAttribute('data-item')),
+                action = e.target.getAttribute('id');
+        this.fire(action, extraObj);
       },
 
     });

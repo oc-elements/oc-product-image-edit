@@ -3,7 +3,9 @@
   "description": "Element to display product image editing controls on the Ordercloud platform",
   "main": "oc-product-image-edit.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^1.1.2",
+    "file-upload": "^1.7.7"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
