@@ -1,10 +1,15 @@
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../oc-file-upload/file-upload.html">
+<link rel="import" href="../oc-file-upload/file-upload-icons.html">
+
 <!--
 `oc-product-image-edit`
 Element to display product image editing controls on the Ordercloud platform
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="oc-product-image-edit">
@@ -14,12 +19,81 @@ Element to display product image editing controls on the Ordercloud platform
         display: block;
       }
 
+      file-upload {
+        width: 100%;
+      }
+
+      paper-icon-button {
+        color: #fff;
+      }
+
       .default-icon {
         color: gold;
       }
 
+      .product-image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% - 20px);
+      }
+
+      .single-image {
+        position: relative;
+        display: block;
+        padding-top: 10%;
+        background: #E2E2E2;
+        margin: 0 10px 60px;
+        min-width: 140px;
+      }
+
+      .single-image img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        max-height: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+      }
+
+      .image-actions {
+        background: #000;
+        position: relative;
+        height: 40px;
+        bottom: -40px;
+        text-align: center;
+      }
+
+      section + section {
+        border-top: 1px solid #bababa;
+        padding-top: 10px;
+      }
+
+      section {
+        margin: 10px 0;
+      }
+
+
     </style>
 
+    <section class="image-uploader">
+      <file-upload
+              target="[[target]]"
+              raised
+              droppable
+              dropText="Drop Images here"
+              errorText="Cannot upload image"
+              accept="image/*"
+              fileDataName="image"
+              headers="[[headers]]"
+              successText="Upload Successful"
+              multi
+              max-size="2000"
+      >
+        Upload File
+      </file-upload>
+    </section>
 
     <section class="product-image-gallery">
       <template is="dom-repeat" items="[[images]]">
@@ -34,7 +108,6 @@ Element to display product image editing controls on the Ordercloud platform
     </section>
 
 
-
   </template>
 
   <script>
@@ -44,6 +117,8 @@ Element to display product image editing controls on the Ordercloud platform
 
       properties: {
         images : Array,
+        target: String,
+        headers: Object
       },
 
       _isDefault : function(isDefault) {
